@@ -32,4 +32,16 @@ public class MainApplication extends Application implements ReactApplication {
   public ReactNativeHost getReactNativeHost() {
       return mReactNativeHost;
   }
+
+  private final ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
+    @Override protected List<ReactPackage> getPackages() {
+      return Arrays.asList(
+          new MainReactPackage(),
+          new MapsPackage());
+    }
+  };
+
+  @Override public ReactNativeHost getReactNativeHost() {
+    return reactNativeHost;
+  }
 }

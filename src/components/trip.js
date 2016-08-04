@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, NavigatorIOS } from 'react-native';
+import { StyleSheet, View, NavigatorIOS, Navigator, Text } from 'react-native';
 import TripList from './trip-list';
 
 class Trip extends Component {
   render() {
-    return (
-      <NavigatorIOS
-           style={styles.container}
-           initialRoute={{
-       title: 'In Trip',
-       component: TripList
-       }}/>
-    );
+    if(this.props.os === 'ios') {
+      return (
+        <NavigatorIOS
+          style={styles.container}
+          initialRoute={{
+            title: 'In Trip',
+            component: TripList
+          }}/>
+        );
+      } else {
+        return ( <Navigator
+          initialRoute={{ title: 'All Assets', index: 0 }}
+          renderScene={(route, navigator) =>
+            <TripList />
+          }
+          style={styles.container}
+        />)
+      }
   }
 }
 
@@ -21,4 +31,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Trip;
+  export default Trip;

@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, View, ListView, TouchableHighlight } from 'rea
 import { ASSETS_DATA } from '../api/assets';
 import Detail from './detail';
 import moment from 'moment';
+import Circle from './circle';
 
 class TripList extends Component {
 
@@ -17,7 +18,7 @@ class TripList extends Component {
 
   componentDidMount() {
     let asset = ASSETS_DATA; // Object.assign({}, ASSETS_DATA);
-    let newAsset = asset.filter( a => a.status === 'inTrip');
+    let newAsset = asset.filter( a => a.drivingStatus === 'inTrip');
     this.setState({
         dataSource: this.state.dataSource.cloneWithRows(newAsset)
     });
@@ -32,6 +33,9 @@ class TripList extends Component {
   }
 
   formatDateTime(time) {
+    if(time.length === 0) {
+      return moment.duration(moment().diff(moment().format())).humanize() + " ago";
+    }
     return moment.duration(moment().diff(time)).humanize() + " ago";
   }
 
@@ -40,7 +44,7 @@ class TripList extends Component {
       <TouchableHighlight onPress={() => this.showDetail(asset)}  underlayColor='#dddddd'>
         <View>
           <View style={styles.container}>
-            <Image style={styles.image} source={{uri: 'http://placehold.it/100x100'}}/>
+            <Circle status={asset.status} />
             <View style={styles.rightContainer}>
               <Text style={styles.title}>{asset.name}</Text>
               <Text style={styles.date}>
@@ -81,6 +85,7 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flex: 1,
+    paddingLeft: 20
   },
   title: {
     fontSize: 20,
@@ -92,14 +97,6 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#dddddd'
-  },
-  listView: {
-    // backgroundColor: '#F5FCFF'
-  },
-  image: {
-    height: 75,
-    borderRadius: 50,
-    width: 75
   }
 });
 

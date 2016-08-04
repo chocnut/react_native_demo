@@ -14,7 +14,4 @@ Installation
 
 Install required dependencies via `npm install`
 
-Run on device or emulator via
-
-ios: react-native run-ios
-android: react-native run-ios
+Run on device or emulator via ios: `react-native run-ios` or android: `react-native run-ios`
